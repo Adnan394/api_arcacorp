@@ -11,7 +11,7 @@
         <div class="card" style="width: 24rem;">
             <div class="card-body">
                 <div class="text-center mb-4">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="img-fluid" style="max-height: 50px;">
+                    <h3>Login</h3>
                 </div>
                 @error('email')
                     <div class="alert alert-danger" role="alert">

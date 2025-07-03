@@ -49,34 +49,22 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
       <!-- End Logo -->
-
-      <div class="search-bar">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-          <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-          <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-        </form>
-      </div>
       <!-- End Search Bar -->
 
       <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
-          <li class="nav-item d-block d-lg-none">
-            <a class="nav-link nav-icon search-bar-toggle" href="#">
-              <i class="bi bi-search"></i>
-            </a>
-          </li>
           <!-- End Search Icon-->
 
           <li class="nav-item dropdown pe-3">
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img style="object-fit: cover; width: 40px; height: 40px" src="{{ isset(\App\Models\MasterUser::where('id', Auth::user()->id)->first()->foto) ? asset(\App\Models\MasterUser::where('id', Auth::user()->id)->first()->foto) : asset('assets/img/defaultpp.webp') }}" alt="" class="rounded-circle">
+              {{-- <img style="object-fit: cover; width: 40px; height: 40px" src="{{ isset(\App\Models\MasterUser::where('id', Auth::user()->id)->first()->foto) ? asset(\App\Models\MasterUser::where('id', Auth::user()->id)->first()->foto) : asset('assets/img/defaultpp.webp') }}" alt="" class="rounded-circle"> --}}
               <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->username }}</span> </a
             ><!-- End Profile Iamge Icon -->
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
-                <h6>{{ \App\Models\MasterUser::where('id', Auth::user()->id)->first()->nama_lengkap ?? ''}}</h6>
-                <span>{{ Auth::user()->role }}</span>
+                {{-- <h6>{{ \App\Models\MasterUser::where('id', Auth::user()->id)->first()->nama_lengkap ?? ''}}</h6> --}}
+                <span>{{ Auth::user()->role_id }}</span>
               </li>
               <li>
                 <hr class="dropdown-divider" />
@@ -111,61 +99,38 @@
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-heading">Menu Admin</li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link {{ $active == 'dashboard' ? '' : 'collapsed' }}" href="/dashboard">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
+          <a class="nav-link {{ $active == 'pengajuan' ? '' : 'collapsed' }}" href="{{ route('role.index') }}">
             <i class="bi bi-globe"></i>
-            <span>Berita</span>
+            <span>Data Pengajuan</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-journals"></i>
-            <span>Informasi Kurikulum</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="index.html">
-            <i class="bi bi-trophy-fill"></i>
-            <span>Prestasi</span>
-          </a>
-        </li>
+        {{-- @if (Auth::user_id == 1) --}}
+          <li class="nav-item">
+            <a class="nav-link {{ $active == 'role' ? '' : 'collapsed' }}" href="{{ route('role.index') }}">
+              <i class="bi bi-globe"></i>
+              <span>Master Role</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ $active == 'category' ? '' : 'collapsed' }}" href="{{ route('category.index') }}">
+              <i class="bi bi-globe"></i>
+              <span>Master Category</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ $active == 'user' ? '' : 'collapsed' }}" href="{{ route('user.index') }}">
+              <i class="bi bi-globe"></i>
+              <span>Master User</span>
+            </a>
+          </li>
+        {{-- @endif --}}
         <!-- End Dashboard Nav -->
-
-        <li class="nav-heading">Setting Umum</li>
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#setting-profile" data-bs-toggle="collapse" href="#"><i class="bi bi-gear-wide-connected"></i><span>Setting Profile</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-          <ul id="setting-profile" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="components-alerts.html"> <i class="bi bi-circle"></i><span>Tentang Kami</span> </a>
-            </li>
-            <li>
-              <a href="components-alerts.html"> <i class="bi bi-circle"></i><span>Kontak Kami</span> </a>
-            </li>
-            <li>
-              <a href="components-alerts.html"> <i class="bi bi-circle"></i><span>Struktur Organisasi</span> </a>
-            </li>
-            <li>
-              <a href="components-alerts.html"> <i class="bi bi-circle"></i><span>Fasilitas Sekolah</span> </a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-heading">Setting Data User</li>
-        <li class="nav-item">
-          <a class="nav-link {{ $active == 'data_guru' || $active == 'data_siswa' ? '' : 'collapsed' }}" data-bs-target="#setting-user" data-bs-toggle="collapse" href="#"><i class="bi bi-gear-wide-connected"></i><span>Setting User</span><i class="bi bi-chevron-down ms-auto"></i> </a>
-          <ul id="setting-user" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="{{ route('data_guru.index') }}"> <i class="bi bi-circle"></i><span>Data Guru</span> </a>
-            </li>
-            <li>
-              <a href="{{ route('data_siswa.index') }}"> <i class="bi bi-circle"></i><span>Data Siswa/i</span> </a>
-            </li>
-          </ul>
-        </li>
 
         <li class="nav-item">
           <a class="nav-link collapsed" href="{{ route('logout') }}">
@@ -218,8 +183,8 @@
         if('{{ session('success') }}'){
             Swal.fire({
                 icon: 'success',
-                title: 'Selamat Datang',
-                text: '{{ Auth::user()->username }}',
+                title: 'Success!',
+                text: '{{ session('success') }}',
                 showConfirmButton: true,
             });
         }
